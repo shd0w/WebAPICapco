@@ -16,3 +16,4 @@ bld/
 launchSettings.json
 launch.json
 tasks.json
+appsettings.Development.json
