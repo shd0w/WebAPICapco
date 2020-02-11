@@ -1,7 +1,7 @@
 # SWApi
 ## Teste prático para o processo seletivo da CAPCO Brasil
 
-#USAGE
+# USAGE
 
 ## /api/people
 > Obter todos os personagens e ordená-los por quantidade de filmes que aparecem, usando nome do personagem como segundo
