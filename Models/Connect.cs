@@ -17,7 +17,7 @@ namespace WebAPICapco.Models
             //Limpa todo o cabeçalho do client
             client.DefaultRequestHeaders.Accept.Clear();
 
-            //Accepct ContentType
+            //Accept ContentType
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
             );

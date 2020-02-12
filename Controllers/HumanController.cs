@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -21,33 +22,36 @@ namespace WebAPICapco.Controllers
         public async Task<object> GetHumanPeople()
         {
             List<HumanPeople> ListPeople = new List<HumanPeople>();
-            List<HumanPeople> HumanPeople = new List<HumanPeople>();
-            List<double> mass = new List<double>();
-            double avgMass = 0;
 
             await SerializePeople(ListPeople, "https://swapi.co/api/people/");
 
             foreach (var people in ListPeople)
             {
                 var especie = await SerializeEspecie(people.Species.FirstOrDefault());
-                if (!string.IsNullOrWhiteSpace(especie))
+
+                people.Species = new List<string>()
                 {
-                    HumanPeople.AddRange(ListPeople.Distinct().Where(x => x.Species.Contains(especie)));
+                    especie
+                };
 
-                    if (string.IsNullOrEmpty(people.Mass) || people.Mass.ToLower() == "unknown")
-                        people.Mass = "0";
-
-                    mass.Add(Convert.ToDouble(people.Mass));
-                    avgMass = mass.Distinct().Sum();
-                }
+                if (string.IsNullOrWhiteSpace(people.Mass) || people.Mass.ToLower() == "unknown")
+                    people.Mass = "0";
             }
 
-            return new
+            List<HumanPeople> HumanPeople = new List<HumanPeople>();
+            HumanPeople.Clear();
+            HumanPeople = ListPeople.Where((x => x.Species.Contains("Human"))).ToList();
+
+            var Retorno = new
             {
-                count = HumanPeople.Distinct().Count(),
-                    PersonagensHumanos = HumanPeople.Distinct(),
-                    MediaDePeso = avgMass > 0 ? avgMass : 0
+                QuantHumanos = HumanPeople.Count(),
+                PersonagensHumanos = HumanPeople.OrderBy(x => x.Name),
+                PesoFinal = HumanPeople.Sum(x => Double.Parse(x.Mass, CultureInfo.InvariantCulture)),
+                MediaDePeso = HumanPeople.Sum(x => Double.Parse(x.Mass, CultureInfo.InvariantCulture)) / HumanPeople.Count()
+
             };
+
+            return Retorno;
 
         }
 
@@ -58,10 +62,7 @@ namespace WebAPICapco.Controllers
 
             var retornoStream = await REST<Species>(endPoint);
 
-            if (retornoStream.Name == "Human")
-                return retornoStream.SpeciesURL;
-            else
-                return string.Empty;
+            return retornoStream.Name;
         }
 
         private static async Task SerializePeople(List<HumanPeople> ListPessoa, string endPoint)

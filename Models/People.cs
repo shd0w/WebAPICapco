@@ -17,10 +17,7 @@ namespace WebAPICapco.Models
         //Peso
         [JsonPropertyName("mass")]
         public string Mass { get; set; }
-
-        [JsonIgnore]
-        public string AvgMass { get; set; }
-
+       
         [JsonPropertyName("hair_color")]
         public string HairColor { get; set; }
 
@@ -43,18 +40,8 @@ namespace WebAPICapco.Models
         [JsonPropertyName("films")]
         public List<string> Films { get; set; }
 
-        // //Retorna a quantidade de filmes retornados! Utilizado para a ordenação, *EndPoint1
-        // [JsonIgnore]
-        // public int CountFilmes { get { return Films.Count; } }
-
         [JsonPropertyName("species")]
         public List<string> Species { get; set; }
-
-        // [JsonPropertyName("vehicles")]
-        // public List<string> Vehicles { get; set; }
-
-        // [JsonPropertyName("starships")]
-        // public List<string> StarShips { get; set; }
 
         [JsonPropertyName("url")]
         public string PersonURL { get; set; }
