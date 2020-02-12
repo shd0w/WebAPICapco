@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using WebAPICapco.Models;
 using System.Net.Http;
-using System.Web.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Threading.Tasks;
+using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using WebAPICapco.Models;
 using static WebAPICapco.Models.Connect;
 
 namespace WebAPICapco.Controllers
@@ -35,8 +35,8 @@ namespace WebAPICapco.Controllers
             return new
             {
                 Name = retornoPeopleID.Name,
-                BirthYear = retornoPeopleID.BirthYear,
-                Films = retornoPeopleID.Films
+                    BirthYear = retornoPeopleID.BirthYear,
+                    Films = retornoPeopleID.Films
             };
         }
 
@@ -57,6 +57,7 @@ namespace WebAPICapco.Controllers
 
             if (!string.IsNullOrEmpty(retornoStream.Next))
                 await SerializePeople(ListPessoa, retornoStream.Next);
+
         }
         private static async Task<People> SerializePeopleID(string endPoint, string ID)
         {
