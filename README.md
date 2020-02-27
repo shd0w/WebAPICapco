@@ -1,5 +1,4 @@
 # SWApi
-> Teste prático para o processo seletivo da CAPCO Brazil
 
 # USAGE
 > dotnet restore
